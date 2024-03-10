@@ -1,5 +1,5 @@
 import openai
-openai.api_key = "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"
+openai.api_key = "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"
 ## ChatGPTに投げる質問を記載する
 content = "明日の天気は？"
 response = openai.chat.completions.create(

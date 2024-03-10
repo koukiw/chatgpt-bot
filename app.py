@@ -75,7 +75,7 @@ def handle_message(event):
 	display_name = profile.display_name
 
 	## ChatGPTに投げる質問を記載する
-	openai.api_key = "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"
+	openai.api_key = os.environ["OPENAI_API_KEYS"]
 	response = openai.chat.completions.create(
 		model = "gpt-3.5-turbo",
 		messages = [
