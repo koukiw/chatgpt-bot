@@ -18,3 +18,8 @@ LINE botのID
 LINE botのQRコード
 
 ![alt text](QR_code.jpg)
+
+
+pip freeze > requirements.txt
+
+

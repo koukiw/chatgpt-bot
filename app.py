@@ -18,14 +18,6 @@ load_dotenv()
 
 import openai
 openai.api_key = "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"
-## ChatGPTに投げる質問を記載する
-content = "明日の天気は？"
-response = openai.chat.completions.create(
-    model = "gpt-3.5-turbo",
-    messages = [
-        {"role": "user", "content": content},
-    ],
-)
 
 ## 環境変数を変数に割り当て
 CHANNEL_ACCESS_TOKEN = os.environ["CHANNEL_ACCESS_TOKEN"]
@@ -69,7 +61,7 @@ def handle_follow(event):
 		messages=[TextMessage(text='Thank You!')]
 	))
 	
-## オウム返しメッセージ
+## chatGPTが返信
 @handler.add(MessageEvent, message=TextMessageContent)
 def handle_message(event):
 	## APIインスタンス化
@@ -84,6 +76,7 @@ def handle_message(event):
 	display_name = profile.display_name
 
 	## ChatGPTに投げる質問を記載する
+	openai.api_key = "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"
 	response = openai.chat.completions.create(
 		model = "gpt-3.5-turbo",
 		messages = [
@@ -92,7 +85,7 @@ def handle_message(event):
 	)
 
 	## 返信メッセージ編集
-	reply = f'{display_name}さんのメッセージ\n{response.choices[0].message.content}'
+	reply = f'{display_name}さんのメッセージ\n{received_message}\n\n\nchatGPTの回答\n\n{response.choices[0].message.content}'
 
 	## chatgptからの返信を送信
 	line_bot_api.reply_message(ReplyMessageRequest(
