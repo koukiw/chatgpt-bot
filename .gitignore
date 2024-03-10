@@ -1,3 +1,4 @@
+# git rm -r --cached .によって追跡解除してから、.gitignoreを作成する
 .env  ## 環境変数ファイル
 test.py ## テスト用のファイル
 **/.DS_Store  ## 不要な管理ファイルの除外
