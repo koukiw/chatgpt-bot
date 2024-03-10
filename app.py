@@ -16,6 +16,17 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
+import openai
+openai.api_key = "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"
+## ChatGPTに投げる質問を記載する
+content = "明日の天気は？"
+response = openai.chat.completions.create(
+    model = "gpt-3.5-turbo",
+    messages = [
+        {"role": "user", "content": content},
+    ],
+)
+
 ## 環境変数を変数に割り当て
 CHANNEL_ACCESS_TOKEN = os.environ["CHANNEL_ACCESS_TOKEN"]
 CHANNEL_SECRET = os.environ["CHANNEL_SECRET"]
@@ -72,10 +83,18 @@ def handle_message(event):
 	profile = line_bot_api.get_profile(event.source.user_id)
 	display_name = profile.display_name
 
-	## 返信メッセージ編集
-	reply = f'{display_name}さんのメッセージ\n{received_message}'
+	## ChatGPTに投げる質問を記載する
+	response = openai.chat.completions.create(
+		model = "gpt-3.5-turbo",
+		messages = [
+			{"role": "user", "content": received_message},
+		],
+	)
 
-	## オウム返し
+	## 返信メッセージ編集
+	reply = f'{display_name}さんのメッセージ\n{response.choices[0].message.content}'
+
+	## chatgptからの返信を送信
 	line_bot_api.reply_message(ReplyMessageRequest(
 		replyToken=event.reply_token,
 		messages=[TextMessage(text=reply)]
