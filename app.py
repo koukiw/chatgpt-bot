@@ -16,6 +16,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
+import openai
 
 ## 環境変数を変数に割り当て
 CHANNEL_ACCESS_TOKEN = os.environ["CHANNEL_ACCESS_TOKEN"]
